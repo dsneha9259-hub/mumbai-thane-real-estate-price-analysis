@@ -13,5 +13,5 @@ SELECT
 FROM properties_with_demeaned_price
 WHERE "Developer" IS NOT NULL
 GROUP BY "Developer"
-HAVING COUNT(*) >= 20
+HAVING COUNT(*) >= 10  -- 10+ listings per developer, matching the dashboard note
 ORDER BY avg_loading_factor ASC;

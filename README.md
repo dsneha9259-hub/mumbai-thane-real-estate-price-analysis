@@ -1,6 +1,6 @@
 # Mumbai & Thane Real Estate: What Actually Drives Price?
 
-A 5-question investigation into 9,980 real property listings across 82+ localities — answering what actually moves price per square foot in this market, and what doesn't.
+A 5-question investigation into 9,980 real property listings across 339 localities — answering what actually moves price per square foot in this market, and what doesn't.
 
 [Learn more ↓](#scenario)
 
@@ -30,7 +30,7 @@ The full interactive Power BI file — [`mumbai-real-estate-analysis.pbix`](mumb
 - **No consistent "under-construction discount" exists** once locality and bedroom count are properly controlled for
 - **The amenity bundle premium is real** — ~13-15% higher price/sqft — but smaller than the naive ~23% comparison first suggested
 - **Location (45%) and unit size (46%) together account for over 90% of the price model's explanatory power** (the model explains 51% of price variation overall); possession status, floor, furnishing, and amenities matter far less by comparison
-- **Outer-suburb localities** (Virar, Nalasopara) offer the best "value for money" by bedroom/amenity tier — but this explicitly ignores commute time, a major caveat
+- **Outer-suburb localities** (Virar, Nalasopara) offer the best "value for money" by bedroom/amenity tier (ranked among the 82 localities with 30+ listings, to avoid unreliable small-sample rankings) — but this explicitly ignores commute time, a major caveat
 - **Two premium developers** (Oberoi Realty, K Raheja Corp) charge a real, measurable premium despite below-average space efficiency (measured here as carpet ÷ covered area — lower means less usable space per sqft paid for)
 
 ## Key Challenges & Solutions

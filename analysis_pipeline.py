@@ -173,7 +173,23 @@ lf_df = clean_df[clean_df['loading_factor'].notna() & clean_df['Developer'].notn
 # neighborhood's average, not the citywide average.
 lf_df['locality_avg_price'] = lf_df.groupby('Area Name')['price_per_sqft'].transform('mean')
 lf_df['price_demeaned'] = lf_df['price_per_sqft'] - lf_df['locality_avg_price']
+
+# Locality-demean loading factor the same way, so the correlation below
+# isn't confounded by "premium areas happen to have different building styles."
+lf_df['locality_avg_loading'] = lf_df.groupby('Area Name')['loading_factor'].transform('mean')
+lf_df['loading_demeaned'] = lf_df['loading_factor'] - lf_df['locality_avg_loading']
+
+# Market-wide correlation, controlled for locality (the ~ -0.05 figure
+# reported in the dashboard and README).
+market_corr = lf_df['loading_demeaned'].corr(lf_df['price_demeaned'])
+print(f"Q5 — Locality-controlled correlation (loading factor vs price/sqft): {round(market_corr, 3)}")
+
 lf_df.to_csv('properties_with_demeaned_price.csv', index=False)
+
+# Developer-level rollup threshold: 10+ listings (matches the dashboard note).
+dev_counts = lf_df['Developer'].value_counts()
+common_devs = dev_counts[dev_counts >= 10].index
+print(f"Q5 — Developers with 10+ listings: {len(common_devs)}")
 # See queries/q5_loading_factor_by_developer.sql for the final developer-level rollup.
 
 print("\nPipeline complete. Outputs: properties_clean.csv, "
