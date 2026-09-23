@@ -14,19 +14,19 @@ The full interactive Power BI file — [`mumbai-real-estate-analysis.pbix`](mumb
 
 ---
 
-**Project Name:** Mumbai & Thane Real Estate: What Actually Drives Price?
-**Project Type:** Data Analytics / BI Case Study
+**Project Name:** Mumbai & Thane Real Estate: What Actually Drives Price?  
+**Project Type:** Data Analytics / BI Case Study  
 **Tools Used:** Python (pandas, scikit-learn), SQL (DuckDB), Power BI Desktop
 
 ## Scenario
 
-- Analyzed 12,685 real property listings scraped from an online property portal (Kaggle: Real Estate Properties Dataset — Mumbai)
+- Started from 12,685 raw property listings scraped from an online property portal (Kaggle: Real Estate Properties Dataset — Mumbai)
 - Investigated five specific business questions spanning pricing psychology, amenity value, locality economics, and one architecture-informed question no generic analyst template would think to ask
 - Goal: produce findings a buyer, developer, or real estate platform could actually act on — not just a dashboard of charts
 
 ## Summary
 
-- After cleaning, 9,980 listings across Mumbai and Thane were analyzed (21% of raw rows removed — out-of-scope listings such as rentals and other cities, plus data-quality failures, each against a documented threshold)
+- After cleaning, 9,980 listings across Mumbai and Thane were analyzed (21% of raw rows removed, each against a documented threshold — mostly listings with missing or implausible carpet area, plus bad prices, physically impossible areas, and a few dozen out-of-scope rows from other cities or rentals)
 - **No consistent "under-construction discount" exists** once locality and bedroom count are properly controlled for
 - **The amenity bundle premium is real** — ~13-15% higher price/sqft — but smaller than the naive ~23% comparison first suggested
 - **Location (45%) and unit size (46%) together account for over 90% of the price model's explanatory power** (the model explains 51% of price variation overall); possession status, floor, furnishing, and amenities matter far less by comparison
@@ -37,8 +37,8 @@ The full interactive Power BI file — [`mumbai-real-estate-analysis.pbix`](mumb
 
 - **Challenge:** Raw data contained extreme outliers (a listing priced at ₹4,080 Cr), ~30 stray rows from cities outside Mumbai/Thane, and 85 physically impossible rows where carpet area exceeded covered area
 - **Solution:** Built a systematic Python cleaning pipeline with explicit, documented sanity-check thresholds for every field, rather than trusting the raw data or silently dropping rows
-- **Challenge:** A naive possession-status-vs-price comparison suggested a large effect, but it turned out to be driven entirely by a locality confound — certain premium under-construction towers were skewing the citywide average
-- **Solution:** Re-ran every comparison controlling for both locality AND bedroom count using matched-pair SQL queries, which reversed or nullified several apparent findings before they could be reported as real
+- **Challenge:** Citywide averages were misleading in both directions. The naive amenity comparison overstated the premium (~23%), while the naive possession-status comparison showed almost no difference (~1%) and hid opposite effects by unit size
+- **Solution:** Re-ran each comparison within matched locality + bedroom groups using SQL. This cut the amenity premium to ~14%, and showed that 1BHKs run slightly cheaper under construction while 4BHKs run pricier
 - **Challenge:** The Random Forest driver-importance model initially appeared to contradict the amenity-premium finding from Question 2
 - **Solution:** Investigated and explained the discrepancy directly rather than hiding it — a controlled marginal effect and a model's predictive-importance ranking are different questions, and can legitimately disagree once locality is already accounted for in the model
 
